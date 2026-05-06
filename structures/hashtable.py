@@ -1,4 +1,6 @@
-class MyHashTable:
+from .snapshot import PickleSnapshots
+
+class MyHashTable(PickleSnapshots):
     _DELETED = object()
 
     def __init__(self, capacity=11):
@@ -25,6 +27,7 @@ class MyHashTable:
                 target_ind = first_deleted if first_deleted is not None else index
                 self.table[target_ind] = (key, value)
                 self.size += 1
+                self.log_history(key)
                 return 
             
             if self.table[index] is self._DELETED:
@@ -35,11 +38,13 @@ class MyHashTable:
 
             if self.table[index][0] == key:
                 self.table[index] = (key, value)
+                self.log_history(key)
                 return
 
         if first_deleted is not None:
             self.table[first_deleted] = (key, value)
             self.size += 1
+            self.log_history(key)
         else:
             raise Exception("Table is full ")
 

@@ -54,7 +54,7 @@ def main():
 
     try:
         tree.load_from_json(file_name)
-        console.print("Data loaded from {file_name}", style="green")
+        console.print(f"Data loaded from {file_name}", style="green")
     except FileNotFoundError:
         console.print("No previous entries found.", style="red")
 
@@ -70,12 +70,29 @@ def main():
         tree.save_to_json(file_name)
         console.print(f"Current state saved in {file_name}", style="green")
     except Exception as e:
-        console.print("Saving error: {e}", style="red")
+        console.print(f"Saving error: {e}", style="red")
+
+    table["watermelon"] = 30
 
 
+    try:
+        table.save_snapshot("hash.pkl")
+        re_table = MyHashTable.load_snapshot("hash.pkl")
+        console.print(f"Data loaded: {re_table['watermelon']}", style="green")
+    except Exception as e:
+        console.print(f"Error {e}", style="red")
 
+    dt2 = datetime(2026, 12, 15, 21, 15)
 
+    tree.insert(dt2.timestamp(), {"amount": 350, "desc": "Shop"})
 
+    try:
+        tree.save_snapshot("tree.pkl")
+        re_tree = BSTree.load_snapshot("tree.pkl")
+        record = re_tree.search(dt2.timestamp())
+        console.print(f"Data loaded: {record}", style="green")
+    except Exception as e:
+        console.print(f"Error {e}", style="red")
 
 
 

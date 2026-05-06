@@ -1,6 +1,6 @@
-from datetime import datetime
 import json
 from pathlib import Path
+from .snapshot import PickleSnapshots
 
 class Node:
     def __init__(self, key, value ):
@@ -9,7 +9,7 @@ class Node:
         self.left = None
         self.right = None
 
-class BinarySearchTree:
+class BinarySearchTree(PickleSnapshots):
     def __init__(self):
         self.root = None
 
@@ -216,13 +216,6 @@ class BinarySearchTree:
         except json.JSONDecodeError:
             raise ValueError(f"File {file_path} corrupted")
             
-
-
-    def log_history(self, key):
-        now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        
-        with open("history.log", "a", encoding="utf-8") as f:
-            f.write(f"[{now} Added element: Key={key}]\n")
 
    
 

@@ -3,4 +3,5 @@ __pycache__/
 *.log
 *.json
 *.pkl
+*.log.old
 log.txt
